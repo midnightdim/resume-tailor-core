@@ -1,25 +1,34 @@
-# Resume Tailor - Privacy-First Resume Rewriter
+# Resume Tailor
 
-## What It Does
-Rewrites your resume to match job descriptions using AI. Zero-storage architecture.
+Core logic for a privacy-first resume tailoring service.
 
-## Privacy Architecture
-- **No Database Storage**: Resumes processed in-memory only
-- **IP Privacy**: User IPs are SHA256-hashed, never stored in plaintext
-- **Immediate Wipe**: All uploads deleted after PDF generation
-- **No Email Collection**: Works without signup
+## Architecture
+
+- **Zero-storage**: Resumes are processed in RAM only. No files are written to disk.
+- **IP hashing**: User IPs are SHA256-hashed before any storage. Plaintext IPs are never persisted.
+- **No accounts**: Users are identified by anonymous session cookies. No email or signup required.
+
+## What's in this repo
+
+This repository contains a subset of the production codebase to demonstrate the privacy architecture:
+
+| File | Purpose |
+|------|---------|
+| `app/services/credit_service.py` | IP hashing logic, credit management |
+| `app/services/pdf_extract.py` | In-memory PDF text extraction |
+| `app/routes/api.py` | Main API endpoint (no disk writes) |
 
 ## Tech Stack
-- FastAPI (async)
-- SQLite (user credits only, no documents)
-- Gemini 3 Flash + OpenRouter fallback
-- Single VPS deployment
 
-## Code Highlights
-See `/app/services/credit_service.py` for IP hashing implementation.
+- Python 3.11+
+- FastAPI
+- SQLite (credits/sessions only, no documents)
+- pdfplumber
 
 ## Live Demo
+
 [deadsimpletools.com/resume-tailor](https://deadsimpletools.com/resume-tailor)
 
 ## License
+
 MIT
